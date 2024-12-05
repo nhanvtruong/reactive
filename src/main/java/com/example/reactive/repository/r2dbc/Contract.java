@@ -1,8 +1,8 @@
 package com.example.reactive.repository.r2dbc;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -10,7 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table(name = "contract")
 @Getter
 @Setter
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class Contract {
 
@@ -21,5 +21,5 @@ public class Contract {
 
   private String status;
 
-  private String contractKey;
+  private final String contractKey;
 }

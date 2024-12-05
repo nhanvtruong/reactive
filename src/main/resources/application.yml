@@ -3,3 +3,7 @@ spring:
     url: r2dbc:postgresql://localhost:5432/postgres
     username: postgres
     password: admin
+timeouts:
+  api:
+    default: 30s
+    contract-status: 60s
