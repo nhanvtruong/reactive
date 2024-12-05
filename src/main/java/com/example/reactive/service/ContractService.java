@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
 
 @Service
 @RequiredArgsConstructor
@@ -20,37 +19,29 @@ public class ContractService {
 
   private final ContractDataAdapter contractDataAdapter;
 
-  public Mono<ContractResponseDto> saveContract(ContractRequestDto contractRequestDto) {
+  public Mono<Contract> saveContract(ContractRequestDto contractRequestDto) {
     Contract contract = Contract.builder()
         .description(contractRequestDto.description())
         .status(Status.CREATED.name())
         .contractKey(contractRequestDto.contractKey())
         .build();
-    return contractDataAdapter.saveContract(contract).map(
-        c -> new ContractResponseDto(c.getId(), c.getDescription(), c.getStatus(),
-            c.getContractKey())
-    );
+    return contractDataAdapter.saveContract(contract);
   }
 
   public Mono<ContractResponseDto> listenToContractStatus(Long id) {
-    return Flux.interval(Duration.ofSeconds(2))
-        .flatMap(tick -> contractDataAdapter.getContract(id)
-            .retryWhen(Retry.backoff(3, Duration.ofSeconds(2))))
-        .filter(c -> !Objects.equals(c.getStatus(), Status.CREATED.name()))
-        .next()
-        .map(contract -> new ContractResponseDto(contract.getId(), contract.getDescription(),
-            contract.getStatus(), contract.getContractKey()))
+    return Flux.interval(Duration.ofSeconds(1))
+        .flatMap(tick -> contractDataAdapter.getContract(id))
+        .filter(contract -> !Objects.equals(contract.getStatus(), Status.CREATED.name()))
+        .timeout(Duration.ofSeconds(60))
+        .next() // Take the first contract that meets the condition
+        .map(ContractDataMapper::toResponseDto)
         .subscribeOn(Schedulers.boundedElastic());
   }
 
+
   public Mono<ContractResponseDto> updateContract(UpdateContractRequestDto requestDto) {
     return contractDataAdapter.updateContract(requestDto.contractId(), requestDto.status().name())
-        .map(c -> ContractResponseDto.builder()
-            .id(c.getId())
-            .description(c.getDescription())
-            .status(c.getStatus())
-            .contractKey(c.getContractKey())
-            .build());
+        .map(ContractDataMapper::toResponseDto);
   }
 
 

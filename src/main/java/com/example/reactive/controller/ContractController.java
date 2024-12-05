@@ -1,7 +1,9 @@
 package com.example.reactive.controller;
 
+import com.example.reactive.repository.r2dbc.Contract;
 import com.example.reactive.service.ContractService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,13 +25,13 @@ public class ContractController {
   }
 
   @PostMapping
-  public ResponseEntity<Mono<ContractResponseDto>> saveContract(
+  public ResponseEntity<Mono<Contract>> saveContract(
       @RequestBody ContractRequestDto contractRequestDto) {
     return new ResponseEntity<>(contractService.saveContract(contractRequestDto),
         HttpStatus.CREATED);
   }
 
-  @GetMapping(value = "/{id}")
+  @GetMapping(value = "/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Mono<ContractResponseDto>> listenToContractStatus(@PathVariable Long id) {
     return new ResponseEntity<>(contractService.listenToContractStatus(id), HttpStatus.OK);
   }
