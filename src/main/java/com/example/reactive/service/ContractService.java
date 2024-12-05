@@ -2,7 +2,7 @@ package com.example.reactive.service;
 
 import com.example.reactive.controller.ContractRequestDto;
 import com.example.reactive.controller.ContractResponseDto;
-import com.example.reactive.repository.Contract;
+import com.example.reactive.repository.r2dbc.Contract;
 import com.example.reactive.repository.ContractDataAdapter;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
