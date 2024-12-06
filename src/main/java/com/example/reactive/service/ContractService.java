@@ -6,6 +6,7 @@ import com.example.reactive.controller.UpdateContractRequestDto;
 import com.example.reactive.repository.ContractDataAdapter;
 import com.example.reactive.repository.r2dbc.Contract;
 import java.time.Duration;
+import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,11 @@ public class ContractService {
   public Mono<ContractResponseDto> updateContract(UpdateContractRequestDto requestDto) {
     return contractDataAdapter.updateContract(requestDto.contractId(), requestDto.status().name())
         .map(ContractDataMapper::toResponseDto);
+  }
+
+  public Flux<List<ContractResponseDto>> getAllContracts(int batchSize , long delay) {
+    return contractDataAdapter.getAllContracts(batchSize,delay)
+        .map(ContractDataMapper::toResponseDtoList);
   }
 
 
