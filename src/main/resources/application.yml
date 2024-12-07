@@ -1,12 +1,9 @@
 spring:
-  task:
-    execution:
-      pool:
-        allow-core-thread-timeout: false
   r2dbc:
     pool:
       max-size: 10
       initial-size: 5
+      validation-query: SELECT 1 = 1;
     url: r2dbc:postgresql://localhost:5432/postgres
     username: postgres
     password: admin

@@ -45,9 +45,8 @@ public class ContractService {
         .map(ContractDataMapper::toResponseDto);
   }
 
-  public Flux<List<ContractResponseDto>> getAllContracts(int batchSize , long delay) {
-    return contractDataAdapter.getAllContracts(batchSize,delay)
-        .map(ContractDataMapper::toResponseDtoList);
+  public Flux<Contract> getAllContracts(int batchSize , long delay) {
+    return contractDataAdapter.getAllContracts(batchSize, delay);
   }
 
 

@@ -26,7 +26,7 @@ public class ContractController {
   private final ContractService contractService;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Flux<List<ContractResponseDto>>> getAllContractsAtSteadyRate(
+  public ResponseEntity<Flux<Contract>> getAllContractsAtSteadyRate(
       @RequestParam int batchSize, @RequestParam long delay) {
     return new ResponseEntity<>(contractService.getAllContracts(batchSize, delay), HttpStatus.OK);
   }
