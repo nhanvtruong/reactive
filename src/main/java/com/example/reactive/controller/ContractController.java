@@ -2,7 +2,7 @@ package com.example.reactive.controller;
 
 import com.example.reactive.repository.r2dbc.Contract;
 import com.example.reactive.service.ContractService;
-import java.util.List;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,7 +27,8 @@ public class ContractController {
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Flux<Contract>> getAllContractsAtSteadyRate(
-      @RequestParam int batchSize, @RequestParam long delay) {
+      @RequestParam @Min(1) final int batchSize,
+      @RequestParam @Min(1) final long delay) {
     return new ResponseEntity<>(contractService.getAllContracts(batchSize, delay), HttpStatus.OK);
   }
 

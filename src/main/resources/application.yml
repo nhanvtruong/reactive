@@ -11,6 +11,8 @@ server:
   reactive:
     session:
       timeout: 30m
+  error:
+    include-message: always
 logging:
   level:
     root: INFO
