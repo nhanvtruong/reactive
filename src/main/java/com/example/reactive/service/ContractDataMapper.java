@@ -1,9 +1,8 @@
 package com.example.reactive.service;
 
-import com.example.reactive.controller.ContractResponseDto;
+import com.example.reactive.controller.dtos.CreateContractRequestDto;
+import com.example.reactive.controller.dtos.ContractResponseDto;
 import com.example.reactive.repository.r2dbc.Contract;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -16,11 +15,16 @@ public class ContractDataMapper {
         .description(contract.getDescription())
         .status(contract.getStatus())
         .contractKey(contract.getContractKey())
+        .createdAt(contract.getCreatedAt())
+        .updatedAt(contract.getUpdatedAt())
         .build();
   }
 
-  public static List<ContractResponseDto> toResponseDtoList(List<Contract> contracts) {
-    return contracts.stream().map(ContractDataMapper::toResponseDto).collect(Collectors.toList());
+  public static Contract toContract(CreateContractRequestDto requestDto) {
+    return Contract.builder()
+        .description(requestDto.description())
+        .contractKey(requestDto.contractKey())
+        .build();
   }
 
 }

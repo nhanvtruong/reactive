@@ -31,4 +31,5 @@ public class Contract {
 
   @LastModifiedDate
   private LocalDateTime updatedAt;
+
 }

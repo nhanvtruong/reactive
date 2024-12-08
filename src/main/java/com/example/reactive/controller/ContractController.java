@@ -1,6 +1,8 @@
 package com.example.reactive.controller;
 
-import com.example.reactive.repository.r2dbc.Contract;
+import com.example.reactive.controller.dtos.CreateContractRequestDto;
+import com.example.reactive.controller.dtos.ContractResponseDto;
+import com.example.reactive.controller.dtos.UpdateContractRequestDto;
 import com.example.reactive.service.ContractService;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
@@ -26,22 +28,22 @@ public class ContractController {
   private final ContractService contractService;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Flux<Contract>> getAllContractsAtSteadyRate(
+  public ResponseEntity<Flux<ContractResponseDto>> getAllContractsAtSteadyRate(
       @RequestParam @Min(1) final int batchSize,
       @RequestParam @Min(1) final long delay) {
     return new ResponseEntity<>(contractService.getAllContracts(batchSize, delay), HttpStatus.OK);
   }
 
   @PostMapping
-  public ResponseEntity<Mono<Contract>> saveContract(
-      @RequestBody ContractRequestDto contractRequestDto) {
-    return new ResponseEntity<>(contractService.saveContract(contractRequestDto),
+  public ResponseEntity<Mono<ContractResponseDto>> saveContract(
+      @RequestBody CreateContractRequestDto createContractRequestDto) {
+    return new ResponseEntity<>(contractService.saveContract(createContractRequestDto),
         HttpStatus.CREATED);
   }
 
   @GetMapping(value = "/{id}")
   public ResponseEntity<Mono<ContractResponseDto>> listenToContractStatus(@PathVariable Long id) {
-    return new ResponseEntity<>(contractService.listenToContractStatus(id), HttpStatus.OK);
+    return new ResponseEntity<>(contractService.detectContractStatusChange(id), HttpStatus.OK);
   }
 
   @PutMapping

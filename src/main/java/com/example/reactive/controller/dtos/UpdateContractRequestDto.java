@@ -1,4 +1,4 @@
-package com.example.reactive.controller;
+package com.example.reactive.controller.dtos;
 
 import com.example.reactive.service.Status;
 import jakarta.validation.constraints.NotNull;

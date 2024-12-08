@@ -1,11 +1,10 @@
 package com.example.reactive.repository;
 
-import com.example.reactive.exceptions.DataConflictException;
+import com.example.reactive.exceptions.UniqueConstraintException;
 import com.example.reactive.repository.r2dbc.Contract;
 import com.example.reactive.repository.r2dbc.ReactiveContractRepository;
-import com.example.reactive.service.Status;
 import java.time.Duration;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,34 +12,32 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
+@RequiredArgsConstructor
 public class ContractDataAdapter {
 
   private final ReactiveContractRepository reactiveContractRepository;
-
-  public ContractDataAdapter(ReactiveContractRepository reactiveContractRepository) {
-    this.reactiveContractRepository = reactiveContractRepository;
-  }
 
   @Transactional
   public Mono<Contract> saveContract(Contract contract) {
     return reactiveContractRepository.save(contract)
         .onErrorResume(DataIntegrityViolationException.class,
-            ex -> Mono.error(new DataConflictException("Data conflict")));
+            ex -> Mono.error(new UniqueConstraintException(ex.getMessage())));
   }
 
-  public Mono<Contract> getContract(Long contractId) {
+  public Mono<Contract> detectContractStatusChange(Long contractId) {
     return reactiveContractRepository.findById(contractId)
         .log();
   }
 
+
   @Transactional
-  public Mono<Contract> updateContract(Long id , String status) {
+  public Mono<Contract> updateContract(Long id, String status) {
     return reactiveContractRepository.updateContractStatus(id, status);
   }
 
-  public Flux<Contract> getAllContracts(int batchSize , long timeInMilliseconds) {
+  public Flux<Contract> getAllContracts(int batchSize, long delay) {
     return reactiveContractRepository.findAll()
-        .bufferTimeout(batchSize,Duration.ofMillis(timeInMilliseconds))
+        .bufferTimeout(batchSize, Duration.ofMillis(delay))
         .flatMap(Flux::fromIterable);
   }
 }
