@@ -6,6 +6,7 @@ import com.example.reactive.controller.dtos.UpdateContractRequestDto;
 import com.example.reactive.service.ContractService;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,14 @@ import reactor.core.publisher.Mono;
 public class ContractController {
 
   private final ContractService contractService;
+
+  @GetMapping
+  public ResponseEntity<Flux<ContractResponseDto>> getAllContractsWithPagination(
+      @RequestParam @Min(1) int page, @RequestParam @Min(1) int size) {
+    Pageable pageable = Pageable.ofSize(size).withPage(page - 1);
+    return new ResponseEntity<>(contractService.getAllContractsWithPagination(pageable),
+        HttpStatus.OK);
+  }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Flux<ContractResponseDto>> getAllContractsAtSteadyRate(

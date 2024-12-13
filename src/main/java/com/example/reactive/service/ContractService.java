@@ -8,6 +8,7 @@ import com.example.reactive.repository.r2dbc.Contract;
 import java.time.Duration;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -45,5 +46,8 @@ public class ContractService {
         .map(ContractDataMapper::toResponseDto);
   }
 
+  public Flux<ContractResponseDto> getAllContractsWithPagination(Pageable pageable) {
+    return contractDataAdapter.getAllContractWithPagination(pageable);
+  }
 
 }
