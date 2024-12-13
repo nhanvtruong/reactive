@@ -1,5 +1,6 @@
 package com.example.reactive.repository;
 
+import com.example.reactive.controller.dtos.ContractResponseDto;
 import com.example.reactive.exceptions.UniqueConstraintException;
 import com.example.reactive.repository.r2dbc.Contract;
 import com.example.reactive.repository.r2dbc.ReactiveContractRepository;
@@ -31,8 +32,8 @@ public class ContractDataAdapter {
 
 
   @Transactional
-  public Mono<Contract> updateContract(Long id, String status) {
-    return reactiveContractRepository.updateContractStatus(id, status);
+  public Mono<ContractResponseDto> updateContract(Long id, String status) {
+    return reactiveContractRepository.updateContractStatus(id, status, ContractResponseDto.class);
   }
 
   public Flux<Contract> getAllContracts(int batchSize, long delay) {
@@ -40,4 +41,6 @@ public class ContractDataAdapter {
         .bufferTimeout(batchSize, Duration.ofMillis(delay))
         .flatMap(Flux::fromIterable);
   }
+
+
 }

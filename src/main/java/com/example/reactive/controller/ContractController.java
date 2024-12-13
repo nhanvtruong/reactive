@@ -1,7 +1,7 @@
 package com.example.reactive.controller;
 
-import com.example.reactive.controller.dtos.CreateContractRequestDto;
 import com.example.reactive.controller.dtos.ContractResponseDto;
+import com.example.reactive.controller.dtos.CreateContractRequestDto;
 import com.example.reactive.controller.dtos.UpdateContractRequestDto;
 import com.example.reactive.service.ContractService;
 import jakarta.validation.constraints.Min;
@@ -42,7 +42,8 @@ public class ContractController {
   }
 
   @GetMapping(value = "/{id}")
-  public ResponseEntity<Mono<ContractResponseDto>> listenToContractStatus(@PathVariable Long id) {
+  public ResponseEntity<Mono<ContractResponseDto>> listenToContractStatus(
+      @PathVariable final Long id) {
     return new ResponseEntity<>(contractService.detectContractStatusChange(id), HttpStatus.OK);
   }
 

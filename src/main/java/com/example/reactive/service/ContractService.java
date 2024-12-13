@@ -1,7 +1,7 @@
 package com.example.reactive.service;
 
-import com.example.reactive.controller.dtos.CreateContractRequestDto;
 import com.example.reactive.controller.dtos.ContractResponseDto;
+import com.example.reactive.controller.dtos.CreateContractRequestDto;
 import com.example.reactive.controller.dtos.UpdateContractRequestDto;
 import com.example.reactive.repository.ContractDataAdapter;
 import com.example.reactive.repository.r2dbc.Contract;
@@ -37,8 +37,7 @@ public class ContractService {
   }
 
   public Mono<ContractResponseDto> updateContract(UpdateContractRequestDto requestDto) {
-    return contractDataAdapter.updateContract(requestDto.contractId(), requestDto.status().name())
-        .map(ContractDataMapper::toResponseDto);
+    return contractDataAdapter.updateContract(requestDto.contractId(), requestDto.status().name());
   }
 
   public Flux<ContractResponseDto> getAllContracts(int batchSize, long delay) {
