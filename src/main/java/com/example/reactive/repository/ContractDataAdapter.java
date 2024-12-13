@@ -7,6 +7,7 @@ import com.example.reactive.repository.r2dbc.ReactiveContractRepository;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
@@ -40,6 +41,10 @@ public class ContractDataAdapter {
     return reactiveContractRepository.findAll()
         .bufferTimeout(batchSize, Duration.ofMillis(delay))
         .flatMap(Flux::fromIterable);
+  }
+
+  public Flux<ContractResponseDto> getAllContractWithPagination(Pageable pageable) {
+    return reactiveContractRepository.findAllByOrderById(pageable, ContractResponseDto.class);
   }
 
 
