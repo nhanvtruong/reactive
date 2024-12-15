@@ -1,4 +1,4 @@
-package com.example.reactive.repository.r2dbc;
+package com.example.reactive.infrastructure.config;
 
 import java.time.Duration;
 import java.time.Instant;

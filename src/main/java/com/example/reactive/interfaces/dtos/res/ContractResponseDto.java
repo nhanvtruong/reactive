@@ -1,4 +1,4 @@
-package com.example.reactive.controller.dtos;
+package com.example.reactive.interfaces.dtos.res;
 
 import java.time.LocalDateTime;
 import lombok.Builder;

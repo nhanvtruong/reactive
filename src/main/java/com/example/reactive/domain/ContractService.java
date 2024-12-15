@@ -1,10 +1,10 @@
-package com.example.reactive.service;
+package com.example.reactive.domain;
 
-import com.example.reactive.controller.dtos.ContractResponseDto;
-import com.example.reactive.controller.dtos.CreateContractRequestDto;
-import com.example.reactive.controller.dtos.UpdateContractRequestDto;
-import com.example.reactive.repository.ContractDataAdapter;
-import com.example.reactive.repository.r2dbc.Contract;
+import com.example.reactive.interfaces.dtos.res.ContractResponseDto;
+import com.example.reactive.interfaces.dtos.rq.CreateContractRequestDto;
+import com.example.reactive.interfaces.dtos.rq.UpdateContractRequestDto;
+import com.example.reactive.infrastructure.adapter.ContractDataAdapterImpl;
+import com.example.reactive.infrastructure.model.ContractModel;
 import java.time.Duration;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -18,19 +18,19 @@ import reactor.core.scheduler.Schedulers;
 @RequiredArgsConstructor
 public class ContractService {
 
-  private final ContractDataAdapter contractDataAdapter;
+  private final ContractDataAdapterImpl contractDataAdapter;
 
   public Mono<ContractResponseDto> saveContract(CreateContractRequestDto createContractRequestDto) {
-    Contract contract = ContractDataMapper.toContract(createContractRequestDto);
-    contract.setStatus(Status.CREATED.name());
-    return contractDataAdapter.saveContract(contract)
+    ContractModel contractModel = ContractDataMapper.toContract(createContractRequestDto);
+    contractModel.setStatus(Status.CREATED.name());
+    return contractDataAdapter.saveContract(contractModel)
         .map(ContractDataMapper::toResponseDto);
   }
 
   public Mono<ContractResponseDto> detectContractStatusChange(Long id) {
     return Flux.interval(Duration.ofSeconds(1))
         .flatMap(tick -> contractDataAdapter.detectContractStatusChange(id))
-        .filter(contract -> !Objects.equals(contract.getStatus(), Status.CREATED.name()))
+        .filter(contractModel -> !Objects.equals(contractModel.getStatus(), Status.CREATED.name()))
         .timeout(Duration.ofSeconds(30),contractDataAdapter.detectContractStatusChange(id))
         .next()
         .map(ContractDataMapper::toResponseDto)

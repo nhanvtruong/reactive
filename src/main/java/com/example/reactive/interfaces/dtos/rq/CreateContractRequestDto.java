@@ -1,4 +1,4 @@
-package com.example.reactive.controller.dtos;
+package com.example.reactive.interfaces.dtos.rq;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

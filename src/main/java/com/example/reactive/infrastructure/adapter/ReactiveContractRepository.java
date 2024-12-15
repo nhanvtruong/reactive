@@ -1,6 +1,7 @@
-package com.example.reactive.repository.r2dbc;
+package com.example.reactive.infrastructure.adapter;
 
 
+import com.example.reactive.infrastructure.model.ContractModel;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
@@ -8,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface ReactiveContractRepository extends R2dbcRepository<Contract, Long> {
+interface ReactiveContractRepository extends R2dbcRepository<ContractModel, Long> {
 
   @Query("UPDATE contract SET status = :status WHERE id = :id RETURNING *")
   <T> Mono<T> updateContractStatus(@Param("id") Long id, @Param("status") String status,

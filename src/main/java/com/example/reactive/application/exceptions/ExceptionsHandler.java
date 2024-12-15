@@ -1,4 +1,4 @@
-package com.example.reactive.exceptions;
+package com.example.reactive.application.exceptions;
 
 import java.util.Map;
 import java.util.Objects;

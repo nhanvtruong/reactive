@@ -1,9 +1,9 @@
-package com.example.reactive.controller;
+package com.example.reactive.interfaces.http;
 
-import com.example.reactive.controller.dtos.ContractResponseDto;
-import com.example.reactive.controller.dtos.CreateContractRequestDto;
-import com.example.reactive.controller.dtos.UpdateContractRequestDto;
-import com.example.reactive.service.ContractService;
+import com.example.reactive.interfaces.dtos.res.ContractResponseDto;
+import com.example.reactive.interfaces.dtos.rq.CreateContractRequestDto;
+import com.example.reactive.interfaces.dtos.rq.UpdateContractRequestDto;
+import com.example.reactive.domain.ContractService;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

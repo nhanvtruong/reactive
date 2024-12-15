@@ -1,4 +1,4 @@
-package com.example.reactive.repository.r2dbc;
+package com.example.reactive.infrastructure.adapter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class R2DbcCriteriaQueryRepository {
+class R2DbcCriteriaQueryRepository {
 
   private final DatabaseClient databaseClient;
+
   private final R2dbcEntityTemplate r2dbcEntityTemplate;
 
   public static class ContractQueryBuilder {

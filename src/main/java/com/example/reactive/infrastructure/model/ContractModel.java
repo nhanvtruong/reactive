@@ -1,4 +1,4 @@
-package com.example.reactive.repository.r2dbc;
+package com.example.reactive.infrastructure.model;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Setter
 @Builder
 @AllArgsConstructor
-public class Contract {
+public class ContractModel {
 
   @Id
   private Long id;
