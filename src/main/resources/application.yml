@@ -23,3 +23,7 @@ logging:
     reactor:
       core: DEBUG
       netty: DEBUG
+application:
+  contract:
+    delay: 1
+    timeout: 30
