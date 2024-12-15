@@ -1,12 +1,12 @@
 package com.example.reactive.interfaces.http;
 
+import com.example.reactive.domain.ContractService;
+import com.example.reactive.interfaces.cqrs.query.ContractQuery;
 import com.example.reactive.interfaces.dtos.res.ContractResponseDto;
 import com.example.reactive.interfaces.dtos.rq.CreateContractRequestDto;
 import com.example.reactive.interfaces.dtos.rq.UpdateContractRequestDto;
-import com.example.reactive.domain.ContractService;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +28,13 @@ public class ContractController {
 
   private final ContractService contractService;
 
-  @GetMapping
+  private final ContractQuery contractQuery;
+
+  @GetMapping(value = "/page")
   public ResponseEntity<Flux<ContractResponseDto>> getAllContractsWithPagination(
-      @RequestParam @Min(1) int page, @RequestParam @Min(1) int size) {
-    Pageable pageable = Pageable.ofSize(size).withPage(page - 1);
-    return new ResponseEntity<>(contractService.getAllContractsWithPagination(pageable),
+      @RequestParam @Min(1) final int number,
+      @RequestParam @Min(1) final int size) {
+    return new ResponseEntity<>(contractQuery.getAllContractsWithPagination(number, size),
         HttpStatus.OK);
   }
 
