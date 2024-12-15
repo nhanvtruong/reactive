@@ -3,7 +3,7 @@ spring:
     pool:
       max-size: 20
       initial-size: 10
-      validation-query: SELECT 1 = 1;
+      validation-query: SELECT 1;
     url: r2dbc:postgresql://localhost:5432/postgres
     username: postgres
     password: admin

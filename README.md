@@ -38,38 +38,26 @@ This behavior is known as the event-loop mechanism , which is widely used by oth
 languages/frameworks
 like Typescript/Node.js , C#/DotNet ,...
 
-In case of this seems not clear.This guy made a great explanation on
+In case this seems not clear to you.This guy made a great explanation on
 this : https://www.youtube.com/watch?v=M3jNn3HMeWg
 
 **Further Explanation**:
 
 - Non-Blocking I/O: In a reactive system, when a thread sends a request to a database, it doesn’t
-  wait
-  for the response. Instead, it is released to handle other incoming requests.
+  wait for the response. Instead, it is freed up to handle other incoming requests. This allows for
+  more efficient use of resources and better handling of concurrent operations.
 
-- Event-Driven Model: The completion of the database operation triggers an event. The event-driven
-  model ensures that once the database responds, any free thread can process the response and
-  complete
-  the client's request.
+- Event-Driven Model: The completion of the database operation triggers an event. In this
+  event-driven model, any available thread can process the response and complete the client's
+  request. This mechanism is often referred to as a publish-subscribe (pub-sub) model, where events
+  are published and subscribers react to them.
 
 - Resource Efficiency: By not blocking threads during I/O operations, the system can handle more
-  concurrent requests with fewer threads, leading to better resource utilization and scalability.
+  concurrent requests with fewer threads. This leads to better resource utilization and scalability,
+  allowing the system to perform efficiently under high loads.
 
-## Disadvantages of Blocking Communication:
-
-- **Resource Intensive**: Blocking communication requires a separate thread for each request,
-  leading to high resource consumption as the number of concurrent users increases.
-- **Scalability Issues**: As the number of users grows, the server quickly reaches its thread limit,
-  causing additional requests to queue up and increasing response times.
-- **High Latency**: Each thread waits for I/O operations to complete, leading to increased latency,
-  particularly under heavy load.
-- **Inefficient Use of Resources**: Threads waiting for I/O operations are not performing any useful
-  work, resulting in inefficient use of CPU and memory resources.
-- **Complex Error Handling**: Managing timeouts and retries for blocking I/O can complicate error
-  handling and recovery processes.
-- **Difficulty in Maintaining Throughput**: Maintaining high throughput becomes challenging as the
-  server must balance processing time among all active threads, leading to potential performance
-  bottlenecks.
+- For better details , check out this
+  post : https://medium.com/simform-engineering/deep-dive-into-reactive-programming-with-spring-boot-d62cae63bb03
 
 ## Advantages of Reactive Programming in Microservices and High I/O Communication:
 
@@ -90,5 +78,67 @@ this : https://www.youtube.com/watch?v=M3jNn3HMeWg
   independent services (microservices), making it easier to update, maintain, and evolve the system
   over time.
 
-By adopting Reactive Programming, these issues can be mitigated, allowing for more efficient,
-scalable, and responsive applications.
+  By adopting Reactive Programming, these issues can be mitigated, allowing for more efficient,
+  scalable, and responsive applications.
+
+## Disadvantages of Reactive Programming with Spring Data and Relational Databases
+
+- **Integration with Blocking APIs**: Many existing libraries and frameworks are blocking and
+  synchronous. Integrating these with a
+  reactive system can be challenging and might require wrapping blocking calls in non-blocking
+  wrappers, adding complexity and reducing performance.
+
+- **Database Support**: Not all relational databases and their drivers fully support reactive
+  programming.For Spring Data R2DBC , check the full list
+  here :https://docs.spring.io/spring-data/r2dbc/docs/3.1.0/reference/html/#r2dbc.drivers
+
+- **Debugging and Tracing:**: Debugging reactive code can be more challenging because the
+  asynchronous flow of data and operations
+  can obscure the root cause of issues. Traditional debugging tools may not be as effective.
+
+- **Transaction Management**: - Controlling database transactions in this model can be trickier
+  since operations don’t execute sequentially or in a blocking manner (e.g., waiting for results to
+  finish one step before proceeding to the next).
+
+- **Performance Overheads**: The reactive approach can introduce performance overheads in some
+  scenarios. Frequent context switching and wrapping/unwrapping of data can add overhead, making it
+  less efficient for certain use cases compared to traditional blocking operations.## Disadvantages
+  of Blocking Communication:
+
+_**Recommend to read these docs before
+coding**_: https://docs.spring.io/spring-data/r2dbc/docs/3.1.0/reference/html/
+
+Everything has its own use case. We've been talking about Reactive Programming and Non-Blocking
+Communication, let's peek into Blocking Communication and Imperative Programming to have a complete
+overview of both.
+
+## Advantage of Blocking Communication
+
+- **Simplicity**: Blocking communication is straightforward and easier to understand & control
+  the workflow.
+
+- **Easier Debugging**: Debugging and tracing issues can be more intuitive since the flow of
+  execution is sequential and easier to follow.
+
+- **Predictable Performance**: With well-understood performance characteristics, blocking I/O can
+  sometimes offer predictable and stable performance for applications with low concurrency.
+
+- **Wide Support**: Many existing systems, protocols, and libraries are designed around blocking
+  I/O, making integration straightforward.Additionally, The ecosystem around blocking communication is mature, with extensive
+  libraries, tools, and frameworks available.
+
+## Disadvantage of Blocking Communication
+
+- **Resource Intensive**: Blocking communication requires a separate thread for each request,
+  leading to high resource consumption as the number of concurrent users increases.
+- **Scalability Issues**: As the number of users grows, the server quickly reaches its thread limit,
+  causing additional requests to queue up and increasing response times.
+- **High Latency**: Each thread waits for I/O operations to complete, leading to increased latency,
+  particularly under heavy load.
+- **Inefficient Use of Resources**: Threads waiting for I/O operations are not performing any useful
+  work, resulting in inefficient use of CPU and memory resources.
+- **Complex Error Handling**: Managing timeouts and retries for blocking I/O can complicate error
+  handling and recovery processes.
+- **Difficulty in Maintaining Throughput**: Maintaining high throughput becomes challenging as the
+  server must balance processing time among all active threads, leading to potential performance
+  bottlenecks.
