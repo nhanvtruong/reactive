@@ -2,7 +2,7 @@ package com.example.reactive.infrastructure.adapter;
 
 import com.example.reactive.application.exceptions.UniqueConstraintException;
 import com.example.reactive.application.port.ContractDataAdapter;
-import com.example.reactive.domain.Status;
+import com.example.reactive.domain.vo.Status;
 import com.example.reactive.infrastructure.config.properties.ApplicationProperties;
 import com.example.reactive.infrastructure.model.ContractModel;
 import com.example.reactive.interfaces.dtos.res.ContractResponseDto;

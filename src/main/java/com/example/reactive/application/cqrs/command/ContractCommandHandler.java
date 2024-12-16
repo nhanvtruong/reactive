@@ -2,7 +2,7 @@ package com.example.reactive.application.cqrs.command;
 
 import com.example.reactive.application.mapper.ContractMapper;
 import com.example.reactive.application.port.ContractDataAdapter;
-import com.example.reactive.domain.Status;
+import com.example.reactive.domain.vo.Status;
 import com.example.reactive.infrastructure.model.ContractModel;
 import com.example.reactive.interfaces.cqrs.command.ContractCommand;
 import com.example.reactive.interfaces.dtos.res.ContractResponseDto;
