@@ -1,4 +1,4 @@
-package com.example.reactive.infrastructure.adapter.r2dbc;
+package com.example.reactive.infrastructure.adapter.r2dbc.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;

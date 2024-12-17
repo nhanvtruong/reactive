@@ -5,6 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record UpdateContractRequestDto(@NotNull Long contractId, Status status) {
+public record UpdateContractRequestDto(@NotNull Long id, Status status) {
 
 }

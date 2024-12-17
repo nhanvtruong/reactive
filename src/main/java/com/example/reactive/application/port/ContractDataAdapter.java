@@ -1,6 +1,6 @@
 package com.example.reactive.application.port;
 
-import com.example.reactive.infrastructure.model.ContractModel;
+import com.example.reactive.infrastructure.adapter.r2dbc.model.ContractModel;
 import com.example.reactive.interfaces.dtos.res.ContractResponseDto;
 import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Flux;

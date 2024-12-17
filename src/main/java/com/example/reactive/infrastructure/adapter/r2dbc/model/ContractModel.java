@@ -1,5 +1,6 @@
-package com.example.reactive.infrastructure.model;
+package com.example.reactive.infrastructure.adapter.r2dbc.model;
 
+import com.example.reactive.domain.vo.Status;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

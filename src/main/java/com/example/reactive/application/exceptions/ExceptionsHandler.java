@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 
 @Log4j2
+@Configuration
 @ControllerAdvice
 public class ExceptionsHandler {
 
@@ -39,5 +41,13 @@ public class ExceptionsHandler {
     ErrorsMessage errorsMessage = new ErrorsMessage(HttpStatus.REQUEST_TIMEOUT.name(),
         "Request timed out");
     return new ResponseEntity<>(errorsMessage, HttpStatus.REQUEST_TIMEOUT);
+  }
+
+  @ExceptionHandler(InvalidContractStatusException.class)
+  public ResponseEntity<ErrorsMessage> handleIllegalArgumentException(Exception e) {
+    log.error(e.getMessage(), e);
+    ErrorsMessage errorsMessage = new ErrorsMessage(HttpStatus.BAD_REQUEST.name(),
+        e.getMessage());
+    return new ResponseEntity<>(errorsMessage, HttpStatus.BAD_REQUEST);
   }
 }

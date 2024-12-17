@@ -1,7 +1,7 @@
-package com.example.reactive.infrastructure.adapter.r2dbc;
+package com.example.reactive.infrastructure.adapter.r2dbc.repository;
 
 
-import com.example.reactive.infrastructure.model.ContractModel;
+import com.example.reactive.infrastructure.adapter.r2dbc.model.ContractModel;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
