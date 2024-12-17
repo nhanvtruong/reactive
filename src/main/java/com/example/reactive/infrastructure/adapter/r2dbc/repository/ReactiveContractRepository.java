@@ -1,4 +1,4 @@
-package com.example.reactive.infrastructure.adapter;
+package com.example.reactive.infrastructure.adapter.r2dbc;
 
 
 import com.example.reactive.infrastructure.model.ContractModel;
