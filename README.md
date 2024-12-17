@@ -4,7 +4,9 @@
 to provide the most coherent and sensible information. However, they are not an absolute source of
 truth. If you have any concerns, please verify the information carefully.
 
-## Typical Blocking Request Handling
+## 🤓 **_Nerdy Section, we talked about theory here_**
+
+### Typical Blocking Request Handling
 
 First, let's consider this scenario:
 
@@ -22,7 +24,7 @@ wait for a thread to complete its job before their request can be processed.
 
 ![201st user waiting for his request to be picked up](https://preview.redd.it/4o3gfaub95781.png?width=640&crop=smart&auto=webp&s=a8f6da6314730390bcd4b4dd50ef6c52122bcc7a)
 
-## Non-Blocking Request Handling in Spring Reactive
+### Non-Blocking Request Handling in Spring Reactive
 
 At this point, we do not want to wait for the database operation to complete. Instead, we want the
 thread to go back and serve another request as soon as possible.
@@ -59,7 +61,7 @@ this : https://www.youtube.com/watch?v=M3jNn3HMeWg
 - For better details , check out this
   post : https://medium.com/simform-engineering/deep-dive-into-reactive-programming-with-spring-boot-d62cae63bb03
 
-## Advantages of Reactive Programming in Microservices and High I/O Communication:
+### Advantages of Reactive Programming in Microservices and High I/O Communication:
 
 - **Scalability**: Reactive programming allows microservices to handle a large number of concurrent
   requests efficiently by using fewer threads. This leads to better resource utilization and
@@ -81,7 +83,7 @@ this : https://www.youtube.com/watch?v=M3jNn3HMeWg
   By adopting Reactive Programming, these issues can be mitigated, allowing for more efficient,
   scalable, and responsive applications.
 
-## Disadvantages of Reactive Programming with Spring Data and Relational Databases
+### Disadvantages of Reactive Programming with Spring Data and Relational Databases
 
 - **Integration with Blocking APIs**: Many existing libraries and frameworks are blocking and
   synchronous. Integrating these with a
@@ -112,7 +114,7 @@ Everything has its own use case. We've been talking about Reactive Programming a
 Communication, let's peek into Blocking Communication and Imperative Programming to have a complete
 overview of both.
 
-## Advantage of Blocking Communication
+### Advantage of Blocking Communication
 
 - **Simplicity**: Blocking communication is straightforward and easier to understand & control
   the workflow.
@@ -127,7 +129,7 @@ overview of both.
   I/O, making integration straightforward.Additionally, The ecosystem around blocking communication is mature, with extensive
   libraries, tools, and frameworks available.
 
-## Disadvantage of Blocking Communication
+### Disadvantage of Blocking Communication
 
 - **Resource Intensive**: Blocking communication requires a separate thread for each request,
   leading to high resource consumption as the number of concurrent users increases.
@@ -142,3 +144,5 @@ overview of both.
 - **Difficulty in Maintaining Throughput**: Maintaining high throughput becomes challenging as the
   server must balance processing time among all active threads, leading to potential performance
   bottlenecks.
+
+## ⛔️🤓 **_Enough of nerdy stuff , this section discusses every API in this project_**

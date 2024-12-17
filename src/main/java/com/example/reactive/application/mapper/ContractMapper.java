@@ -15,8 +15,6 @@ public interface ContractMapper {
 
   ContractResponseDto toResponseDto(ContractModel contractModel);
 
-  ContractModel toModel(CreateContractRequestDto requestDto);
-
   Contract toContractEntity(CreateContractRequestDto requestDto);
 
   Contract toContractEntity(UpdateContractRequestDto requestDto);

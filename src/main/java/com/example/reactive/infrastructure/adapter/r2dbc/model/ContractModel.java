@@ -1,6 +1,6 @@
 package com.example.reactive.infrastructure.adapter.r2dbc.model;
 
-import com.example.reactive.domain.events.ContractCreatedEvent;
+import com.example.reactive.domain.events.ContractEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +41,10 @@ public class ContractModel {
   private LocalDateTime updatedAt;
 
   @Transient
-  private final List<ContractCreatedEvent> domainEvents = new ArrayList<>();
+  private final List<ContractEvent> domainEvents = new ArrayList<>();
 
   @DomainEvents
-  public List<ContractCreatedEvent> publishDomainEvents() {
+  public List<ContractEvent> publishDomainEvents() {
     return new ArrayList<>(domainEvents);
   }
 
@@ -54,7 +54,7 @@ public class ContractModel {
   }
 
   public void onContractCreatedEvent() {
-    domainEvents.add(new ContractCreatedEvent(this));
+    domainEvents.add(new ContractEvent(this));
   }
 
 }
