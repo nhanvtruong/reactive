@@ -13,6 +13,7 @@ server:
       timeout: 30m
   error:
     include-message: always
+  port: 8000
 logging:
   level:
     root: INFO
@@ -27,3 +28,8 @@ application:
   contract:
     delay: 1
     timeout: 30
+services:
+  auth:
+    hostname: http://localhost:8080
+    resources:
+      heartbeat: /public/heartbeat
