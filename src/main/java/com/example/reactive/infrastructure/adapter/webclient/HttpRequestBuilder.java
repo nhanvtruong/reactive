@@ -1,36 +1,49 @@
 package com.example.reactive.infrastructure.adapter.webclient;
 
+import com.example.reactive.infrastructure.config.properties.ServiceProperties;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import java.util.HashMap;
 import java.util.Map;
+import org.springframework.web.util.UriComponentsBuilder;
 
 abstract class HttpRequestBuilder<T extends HttpRequestBuilder<T>> {
 
-  protected StringBuilder uri = new StringBuilder();
-  protected final Map<String, String> queryParams = new HashMap<>();
+  protected String uri;
+  protected UriComponentsBuilder uriBuilder;
+  protected ServiceProperties serviceProperties;
 
   @SuppressWarnings("unchecked")
   protected T self() {
     return (T) this;
   }
 
-  public T host(@NotNull String hostName) {
-    uri.append(hostName);
+  public T hostProperties(ServiceProperties serviceProperties) {
+    this.serviceProperties = serviceProperties;
+    uriBuilder.scheme("http")
+        .host(serviceProperties.getHostname())
+        .port(serviceProperties.getPort());
     return self();
   }
 
-  public T endpoint(@NotNull String requestUrl) {
-    uri.append("/").append(requestUrl);
+  public T resource(@NotNull String resourceName) {
+    uriBuilder.path(serviceProperties.getResourceUrl(resourceName));
     return self();
   }
 
-  public T queryParam(String key, String value) {
-    this.queryParams.put(key, value);
+  public T queryParam(@NotNull String key, @NotNull String value) {
+    uriBuilder.queryParam(key, value);
     return self();
   }
 
-  public T queryParams(Map<String, String> params) {
-    this.queryParams.putAll(params);
+  public T queryParams(@NotNull @NotEmpty Map<String, String> queryParams) {
+    for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+      uriBuilder.queryParam(entry.getKey(), entry.getValue());
+    }
+    return self();
+  }
+
+  public T build() {
+    uri = uriBuilder.toUriString();
     return self();
   }
 }

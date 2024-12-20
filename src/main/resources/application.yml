@@ -30,6 +30,7 @@ application:
     timeout: 30
 services:
   auth:
-    hostname: http://localhost:8080
+    hostname: localhost
+    port: 8080
     resources:
       heartbeat: public/heartbeat

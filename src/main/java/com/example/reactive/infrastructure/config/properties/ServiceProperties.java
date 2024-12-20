@@ -5,4 +5,6 @@ public interface ServiceProperties {
   String getHostname();
 
   String getResourceUrl(String name);
+
+  Integer getPort();
 }

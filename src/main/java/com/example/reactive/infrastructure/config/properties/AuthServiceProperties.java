@@ -13,7 +13,11 @@ import org.springframework.stereotype.Component;
 public class AuthServiceProperties implements ServiceProperties {
 
   private String hostname;
+  private int port;
   private Map<String, String> resources;
+
+  // list of auth service corresponding resource defined in application.yml
+  public static final String HEARTBEAT = "heartbeat";
 
   @Override
   public String getHostname() {
@@ -23,5 +27,10 @@ public class AuthServiceProperties implements ServiceProperties {
   @Override
   public String getResourceUrl(String name) {
     return this.resources.get(name);
+  }
+
+  @Override
+  public Integer getPort() {
+    return port;
   }
 }
