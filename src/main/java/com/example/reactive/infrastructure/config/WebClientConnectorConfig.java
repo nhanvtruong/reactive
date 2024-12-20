@@ -18,7 +18,7 @@ public class WebClientConnectorConfig {
   @Bean
   public HttpClient httpClient() {
     ConnectionProvider provider = ConnectionProvider.builder("connectionProviderConfig")
-        .maxConnections(100) // max open concurrent connection at a time
+        .maxConnections(20) // max open concurrent connection at a time
         .maxIdleTime(Duration.ofSeconds(20)) // maximum amount of time a connection can remain idle in the pool before being closed
         .maxLifeTime(Duration.ofMinutes(5)) // time to live
         .pendingAcquireMaxCount(200)  // maximum number of requests that can be pending while waiting for a connection from the pool
@@ -32,8 +32,8 @@ public class WebClientConnectorConfig {
   }
 
   @Bean
-  public WebClient httpReactorClient(HttpClient httpClient) {
-    ClientHttpConnector connector = new ReactorClientHttpConnector(httpClient);
+  public WebClient httpReactorClient() {
+    ClientHttpConnector connector = new ReactorClientHttpConnector(httpClient());
     return WebClient.builder().clientConnector(connector).build();
   }
 }

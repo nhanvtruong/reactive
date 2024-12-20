@@ -32,4 +32,4 @@ services:
   auth:
     hostname: http://localhost:8080
     resources:
-      heartbeat: /public/heartbeat
+      heartbeat: public/heartbeat
