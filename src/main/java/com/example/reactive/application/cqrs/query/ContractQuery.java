@@ -1,6 +1,6 @@
-package com.example.reactive.interfaces.cqrs.query;
+package com.example.reactive.application.cqrs.query;
 
-import com.example.reactive.interfaces.dtos.res.ContractResponseDto;
+import com.example.reactive.interfaces.res.ContractResponseDto;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

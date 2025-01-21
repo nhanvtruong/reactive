@@ -1,10 +1,9 @@
 package com.example.reactive.interfaces.http;
 
-import com.example.reactive.interfaces.cqrs.command.ContractCommand;
-import com.example.reactive.interfaces.cqrs.query.ContractQuery;
-import com.example.reactive.interfaces.dtos.res.ContractResponseDto;
-import com.example.reactive.interfaces.dtos.rq.CreateContractRequestDto;
-import com.example.reactive.interfaces.dtos.rq.UpdateContractRequestDto;
+import com.example.reactive.interfaces.res.ContractResponseDto;
+import com.example.reactive.interfaces.rq.CreateContractRequestDto;
+import com.example.reactive.interfaces.rq.UpdateContractRequestDto;
+import com.example.reactive.interfaces.services.ContractService;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,15 +25,13 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/contracts")
 public class ContractController {
 
-  private final ContractQuery contractQuery;
-
-  private final ContractCommand contractCommand;
+  private final ContractService contractService;
 
   @GetMapping(value = "/page")
   public ResponseEntity<Flux<ContractResponseDto>> getAllContractsWithPagination(
       @RequestParam @Min(1) final int number,
       @RequestParam @Min(1) final int size) {
-    return new ResponseEntity<>(contractQuery.getAllContractsWithPagination(number, size),
+    return new ResponseEntity<>(contractService.getAllContractsWithPagination(number, size),
         HttpStatus.OK);
   }
 
@@ -42,25 +39,25 @@ public class ContractController {
   public ResponseEntity<Flux<ContractResponseDto>> getAllContractsAtSteadyRate(
       @RequestParam @Min(1) final int batchSize,
       @RequestParam @Min(1) final long delay) {
-    return new ResponseEntity<>(contractQuery.getAllContracts(batchSize, delay), HttpStatus.OK);
+    return new ResponseEntity<>(contractService.getAllContracts(batchSize, delay), HttpStatus.OK);
   }
 
   @PostMapping
   public ResponseEntity<Mono<ContractResponseDto>> saveContract(
       @RequestBody CreateContractRequestDto createContractRequestDto) {
-    return new ResponseEntity<>(contractCommand.saveContract(createContractRequestDto),
+    return new ResponseEntity<>(contractService.saveContract(createContractRequestDto),
         HttpStatus.CREATED);
   }
 
   @GetMapping(value = "/{id}")
   public ResponseEntity<Mono<ContractResponseDto>> subscribeToContractStatusChange(
       @PathVariable final Long id) {
-    return new ResponseEntity<>(contractQuery.subscribeToContractStatusChange(id), HttpStatus.OK);
+    return new ResponseEntity<>(contractService.subscribeToContractStatusChange(id), HttpStatus.OK);
   }
 
   @PutMapping
   public ResponseEntity<Mono<ContractResponseDto>> updateContract(
       @RequestBody UpdateContractRequestDto contractRequestDto) {
-    return new ResponseEntity<>(contractCommand.updateContract(contractRequestDto), HttpStatus.OK);
+    return new ResponseEntity<>(contractService.updateContract(contractRequestDto), HttpStatus.OK);
   }
 }

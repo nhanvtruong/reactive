@@ -5,7 +5,7 @@ import com.example.reactive.application.port.ContractDataAdapter;
 import com.example.reactive.domain.vo.Status;
 import com.example.reactive.infrastructure.adapter.r2dbc.model.ContractModel;
 import com.example.reactive.infrastructure.config.properties.ApplicationProperties;
-import com.example.reactive.interfaces.dtos.res.ContractResponseDto;
+import com.example.reactive.interfaces.res.ContractResponseDto;
 import java.time.Duration;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;

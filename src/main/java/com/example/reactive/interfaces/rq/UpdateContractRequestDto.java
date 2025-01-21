@@ -1,4 +1,4 @@
-package com.example.reactive.interfaces.dtos.rq;
+package com.example.reactive.interfaces.rq;
 
 import com.example.reactive.domain.vo.Status;
 import jakarta.validation.constraints.NotNull;
