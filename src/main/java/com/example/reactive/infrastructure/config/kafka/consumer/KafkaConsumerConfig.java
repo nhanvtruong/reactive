@@ -1,7 +1,9 @@
-package com.kafka.consumer.config;
+package com.example.reactive.infrastructure.config.kafka.consumer;
 
-import com.kafka.consumer.controller.ContractCreatedMessage;
-import com.kafka.consumer.controller.ContractCreatedMessageDeserializer;
+import com.example.reactive.application.event.message.ContractCreatedMessage;
+import com.example.reactive.infrastructure.config.properties.KafkaPropertiesConfig;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -12,30 +14,18 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
-import org.springframework.kafka.listener.ContainerProperties;
-
 @Configuration
 @EnableKafka
+@RequiredArgsConstructor
 public class KafkaConsumerConfig {
 
-//  @Bean
-//  public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory(
-//      ConsumerFactory<String, String> consumerFactory) {
-//    ConcurrentKafkaListenerContainerFactory<String, String> factory =
-//        new ConcurrentKafkaListenerContainerFactory<>();
-//    factory.setConsumerFactory(consumerFactory);
-//    factory.setConcurrency(3);
-//    factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
-//    return factory;
-//  }
+  private final KafkaPropertiesConfig kafkaPropertiesConfig;
 
   @Bean
   public ConsumerFactory<String, ContractCreatedMessage> contractCreatedMessageConsumerFactory() {
     Map<String, Object> configProps = new HashMap<>();
     configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-        "http://localhost:9094");
+        kafkaPropertiesConfig.getBootstrapServers());
     configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
         StringDeserializer.class);
     configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,

@@ -1,4 +1,4 @@
-package com.example.reactive.application.event;
+package com.example.reactive.application.event.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,8 +1,8 @@
 package com.example.reactive.application.exceptions;
 
-public class KafkaMessageException extends RuntimeException {
+public class KafkaConvertMessageException extends RuntimeException {
 
-  public KafkaMessageException(String message) {
+  public KafkaConvertMessageException(String message) {
     super(message);
   }
 }

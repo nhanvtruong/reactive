@@ -1,4 +1,4 @@
-package com.example.reactive.infrastructure.config.kafka.serializer;
+package com.example.reactive.infrastructure.config.kafka.producer;
 
 import com.example.reactive.application.event.message.ContractCreatedMessage;
 import org.springframework.stereotype.Component;

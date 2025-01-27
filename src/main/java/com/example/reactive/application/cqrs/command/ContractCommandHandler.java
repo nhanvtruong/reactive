@@ -11,6 +11,7 @@ import com.example.reactive.interfaces.rq.UpdateContractRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -22,6 +23,7 @@ public class ContractCommandHandler implements ContractCommand {
   private final ApplicationEventPublisher eventPublisher;
 
   @Override
+  @Transactional
   public Mono<ContractResponseDto> saveContract(CreateContractRequestDto createContractRequestDto) {
     Contract contract = ContractMapper.INSTANCE.toContractEntity(createContractRequestDto);
     contract.createContract();

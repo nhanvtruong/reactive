@@ -1,6 +1,6 @@
-package com.example.reactive.infrastructure.config.kafka.serializer;
+package com.example.reactive.infrastructure.config.kafka.producer;
 
-import com.example.reactive.application.exceptions.MessageSerializeException;
+import com.example.reactive.application.exceptions.KafkaConvertMessageException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.common.serialization.Serializer;
@@ -20,7 +20,7 @@ public class KafkaMessageSerializer<T> implements Serializer<T> {
       return objectMapper.writeValueAsBytes(data);
     } catch (Exception e) {
       log.error(e);
-      throw new MessageSerializeException("Unable to serialize message");
+      throw new KafkaConvertMessageException("Unable to serialize message");
     }
   }
 }
